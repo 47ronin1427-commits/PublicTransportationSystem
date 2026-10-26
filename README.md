@@ -40,6 +40,8 @@ PublicTransportationSystem/
 │   ├── PriorityQueue.cpp
 │   ├── DispatchStack.cpp
 │   └── Benchmark.cpp
+├── docs/
+│   ├── screenshots/
 └── README.md
 ```
 
