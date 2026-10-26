@@ -1,0 +1,18 @@
+# Compiled executables
+*.exe
+*.o
+*.obj
+
+# Debug and build files
+*.pdb
+*.ilk
+build/
+Debug/
+Release/
+
+# VS Code workspace settings
+.vscode/
+
+# Temporary files
+*.tmp
+*.log
