@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "PriorityQueue.h"
 
@@ -22,34 +23,60 @@ bool PriorityQueue::isEmpty() const {
 void PriorityQueue::enqueue(const Passenger& passenger) {
     PassengerNode* newNode = new PassengerNode(passenger);
 
-    bool hasPriority = passenger.isSenior || passenger.hasDisability;
+    // Higher number means higher priority.
+    int newPriority = 0;
 
+    if (passenger.isSenior && passenger.hasDisability) {
+        newPriority = 3;
+    } else if (passenger.hasDisability) {
+        newPriority = 2;
+    } else if (passenger.isSenior) {
+        newPriority = 1;
+    }
+
+    // Insert at the front if the queue is empty
+    // or the new passenger has higher priority.
     if (front == nullptr) {
         front = newNode;
-    } else if (hasPriority) {
-        PassengerNode* current = front;
+    } else {
+        int frontPriority = 0;
 
-        if (!(current->data.isSenior || current->data.hasDisability)) {
+        if (front->data.isSenior && front->data.hasDisability) {
+            frontPriority = 3;
+        } else if (front->data.hasDisability) {
+            frontPriority = 2;
+        } else if (front->data.isSenior) {
+            frontPriority = 1;
+        }
+
+        if (newPriority > frontPriority) {
             newNode->next = front;
             front = newNode;
         } else {
-            while (current->next != nullptr &&
-                   (current->next->data.isSenior ||
-                    current->next->data.hasDisability)) {
+            PassengerNode* current = front;
+
+            while (current->next != nullptr) {
+                int nextPriority = 0;
+
+                if (current->next->data.isSenior &&
+                    current->next->data.hasDisability) {
+                    nextPriority = 3;
+                } else if (current->next->data.hasDisability) {
+                    nextPriority = 2;
+                } else if (current->next->data.isSenior) {
+                    nextPriority = 1;
+                }
+
+                if (newPriority > nextPriority) {
+                    break;
+                }
+
                 current = current->next;
             }
 
             newNode->next = current->next;
             current->next = newNode;
         }
-    } else {
-        PassengerNode* current = front;
-
-        while (current->next != nullptr) {
-            current = current->next;
-        }
-
-        current->next = newNode;
     }
 
     cout << "Passenger added to the queue.\n";

@@ -44,6 +44,7 @@ int main() {
             cout << "Invalid input. Please enter a number.\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            choice = -1;
             continue;
         }
 
